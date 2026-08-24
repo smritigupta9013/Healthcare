@@ -1,0 +1,8 @@
+paths:
+  raw_data: data/raw
+  interim_data: data/interim
+  processed_data: data/processed
+  feature_store: data/feature_store
+  models: models
+  artifacts: artifacts
+  logs: logs

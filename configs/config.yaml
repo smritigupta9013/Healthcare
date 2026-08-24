@@ -1,0 +1,15 @@
+project:
+  name: healthcare-readmission-prediction
+  version: "1.0.0"
+
+data:
+  raw_file: data/raw/diabetic_data.csv
+  processed_file: data/processed/processed_data.csv
+
+model:
+  target_column: readmitted
+  test_size: 0.2
+  random_state: 42
+
+logging:
+  level: INFO
