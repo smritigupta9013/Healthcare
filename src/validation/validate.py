@@ -72,17 +72,31 @@ class DataValidator:
         ]
 
         if len(invalid_targets) > 0:
-
             logger.error(
-                f"Invalid target values found: "
-                f"{len(invalid_targets)}"
+                f"Invalid target values found: {len(invalid_targets)}"
             )
-
             return False
 
         logger.info("Target validation passed")
-
         return True
+
+    def validate_all(self) -> bool:
+        """
+        Runs all essential validation checks (columns schema, target values).
+        Returns True if all critical checks pass, False otherwise.
+        """
+        logger.info("Running comprehensive data validation checks...")
+        cols_valid = self.validate_columns()
+        self.validate_duplicates()
+        self.validate_missing_values()
+        target_valid = self.validate_target()
+
+        is_valid = cols_valid and target_valid
+        if is_valid:
+            logger.info("All data validation checks passed successfully.")
+        else:
+            logger.error("Data validation checks failed!")
+        return is_valid
 
 
 if __name__ == "__main__":
