@@ -24,8 +24,12 @@ An end-to-end production Machine Learning system for predicting 30-day hospital 
    - **XGBoost Champion (`0.6540` ROC-AUC, 51.63% Recall on 8.98% minority class)**.
 4. **Modular Production Modules (`src/`)**:
    - Ingestion $\rightarrow$ Validation $\rightarrow$ Cleaning $\rightarrow$ Missing Imputation $\rightarrow$ Feature Engineering $\rightarrow$ Encoding $\rightarrow$ Training $\rightarrow$ Evaluation.
-5. **Real-Time FastAPI Prediction Service**:
+5. **Automated Unit Testing (`tests/`)**:
+   - 14 comprehensive unit tests covering cleaning, feature engineering, and API endpoints (`pytest`).
+6. **Real-Time FastAPI Prediction Service**:
    - Real-time `/predict` endpoint with automated preprocessing, risk tiering, and actionable clinical guidance.
+7. **Docker Containerization**:
+   - Production multi-stage `Dockerfile` and `docker-compose.yml` for containerized deployment.
 
 ---
 
@@ -36,8 +40,24 @@ An end-to-end production Machine Learning system for predicting 30-day hospital 
 python -m src.pipeline.training_pipeline --model xgboost
 ```
 
-### 2. Launch FastAPI Real-Time Scoring Service
+### 2. Run Unit Test Suite
+```bash
+pytest -v
+```
+
+### 3. Launch FastAPI Real-Time Scoring Service
 ```bash
 python -m src.api.main
 ```
 Open **Interactive Swagger UI**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### 4. Launch Interactive Streamlit Clinical Web Dashboard
+```bash
+streamlit run src/dashboard/app.py
+```
+Open **Web Dashboard**: [http://localhost:8501](http://localhost:8501)
+
+### 5. Deploy with Docker Compose
+```bash
+docker-compose up --build -d
+```
