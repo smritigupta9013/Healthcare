@@ -1,18 +1,18 @@
 # Environment
 .env
 venv/
+.venv/
+env/
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+.coverage
 
 # Jupyter
 .ipynb_checkpoints/
-
-# ML artifacts
-models/
-artifacts/
 
 # Logs
 logs/
@@ -20,6 +20,7 @@ logs/
 
 # IDE
 .vscode/
+.idea/
 
 # OS
 .DS_Store
