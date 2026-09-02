@@ -1,0 +1,55 @@
+{
+  "tuned_model": "XGBoost_Tuned",
+  "test_roc_auc": 0.6623,
+  "best_hyperparameters": {
+    "subsample": 0.7,
+    "reg_lambda": 5.0,
+    "reg_alpha": 5.0,
+    "n_estimators": 250,
+    "min_child_weight": 10,
+    "max_depth": 7,
+    "learning_rate": 0.02,
+    "gamma": 0.5,
+    "colsample_bytree": 0.8
+  },
+  "baseline_threshold_0_50": {
+    "threshold": 0.5,
+    "recall_class_1": 0.5274,
+    "precision_class_1": 0.1544,
+    "accuracy": 0.6981
+  },
+  "optimal_f2_threshold (balanced clinical)": {
+    "optimal_threshold": 0.4394,
+    "max_f2_score": 0.3668,
+    "recall": 0.7136,
+    "precision": 0.1246,
+    "specificity": 0.5054,
+    "true_positives": 897,
+    "false_positives": 6302,
+    "false_negatives": 360,
+    "true_negatives": 6439
+  },
+  "youden_j_threshold": {
+    "optimal_threshold": 0.503,
+    "max_youden_j": 0.2451,
+    "recall": 0.5211,
+    "specificity": 0.724,
+    "precision": 0.157,
+    "true_positives": 655,
+    "false_positives": 3516
+  },
+  "target_70_percent_recall": {
+    "target_recall_requested": 0.7,
+    "achieved_recall": 0.7208,
+    "threshold": 0.4379,
+    "precision": 0.1245,
+    "patients_flagged": 7279
+  },
+  "target_80_percent_recall": {
+    "target_recall_requested": 0.8,
+    "achieved_recall": 0.8154,
+    "threshold": 0.398,
+    "precision": 0.1105,
+    "patients_flagged": 9276
+  }
+}

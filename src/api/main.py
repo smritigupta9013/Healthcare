@@ -145,11 +145,11 @@ def predict_readmission(patient: PatientInput):
         # Predict continuous probability
         risk_probability = float(MODEL.predict_proba(features_df)[0, 1])
 
-        # Clinical Decision Threshold (0.45 threshold tuned for healthcare recall)
-        is_readmitted = int(risk_probability >= 0.45)
+        # Optimal F2 Clinical Decision Threshold (0.44 threshold achieves 71.36% recall)
+        is_readmitted = int(risk_probability >= 0.44)
 
         # Determine clinical risk tier & guidance
-        if risk_probability >= 0.50:
+        if risk_probability >= 0.44:
             risk_tier = "High Risk"
             recommendation = (
                 "High readmission risk detected! Recommend scheduling a post-discharge "

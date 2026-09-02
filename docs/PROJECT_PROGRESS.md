@@ -128,51 +128,86 @@ We engineered 4 high-impact domain features:
 
 ---
 
-## 🏗️ 8. Production Modular Architecture (`src/`)
+## 🚀 8. Hyperparameter Tuning & Optimal Threshold Optimization
+
+To push clinical performance beyond the baseline, we built an automated tuning and threshold optimization engine in [`src/training/hyperparameter.py`](file:///c:/Users/Admin/Documents/python/Healthcare-ML-System/src/training/hyperparameter.py):
+
+* **5-Fold Stratified Cross-Validation Search** over 9 XGBoost parameters (`max_depth=7`, `n_estimators=250`, `learning_rate=0.02`, `reg_alpha=5.0`, `reg_lambda=5.0`, `subsample=0.7`, `colsample_bytree=0.8`, `gamma=0.5`).
+* **ROC-AUC Score**: Improved from `0.6540` to **`0.6623`**.
+* **Clinical Threshold Optimization ($F_2$-Score)**:
+  * Baseline `0.50` threshold: **`52.74%` Recall** (missed 594 readmissions).
+  * Optimal **`0.44`** threshold: **`71.36%` Recall** (catches **897 / 1,257** readmissions — **+20% more readmissions prevented**).
+
+---
+
+## 🏗️ 9. Production Modular Architecture (`src/`)
 
 ```
 Healthcare-ML-System/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                    # Automated GitHub Actions CI/CD
 ├── artifacts/
-│   └── xgboost_metrics.json          # Exported evaluation metrics
+│   ├── xgboost_metrics.json          # Exported evaluation metrics
+│   └── hyperparameter_tuning_results.json # 5-fold tuning & threshold report
+├── docker-compose.yml                # Dual service composition (FastAPI + Streamlit)
+├── Dockerfile                        # Production container image
 ├── models/
-│   ├── xgboost_model.joblib          # Serialized trained model
+│   ├── xgboost_model.joblib          # Serialized tuned production model
 │   └── feature_columns.json          # 209-column feature schema
 ├── src/
-│   ├── ingestion/
-│   │   └── ingest.py                 # DataIngestion class
-│   ├── validation/
-│   │   ├── schema.py                 # Required columns schema
-│   │   └── validate.py               # DataValidator class
+│   ├── ingestion/ingest.py           # DataIngestion class
+│   ├── validation/validate.py        # DataValidator class
 │   ├── preprocessing/
 │   │   ├── clean.py                  # DataCleaner class
 │   │   ├── missing.py                # MissingValueHandler class
 │   │   └── encoding.py               # DataEncoder class
-│   ├── feature_engineering/
-│   │   └── create_features.py        # FeatureEngineer class
+│   ├── feature_engineering/create_features.py # FeatureEngineer class
 │   ├── training/
-│   │   └── train.py                  # ModelTrainer class
-│   ├── evaluation/
-│   │   └── evaluate.py               # ModelEvaluator class
-│   ├── pipeline/
-│   │   └── training_pipeline.py      # End-to-end automated pipeline
-│   └── api/
-│       ├── schemas.py                # Pydantic PatientInput & Response schemas
-│       └── main.py                   # FastAPI REST Prediction Endpoint
+│   │   ├── train.py                  # ModelTrainer class
+│   │   └── hyperparameter.py         # HyperparameterTuner & ThresholdOptimizer
+│   ├── evaluation/evaluate.py        # ModelEvaluator class
+│   ├── pipeline/training_pipeline.py # End-to-end automated pipeline
+│   ├── api/
+│   │   ├── schemas.py                # Pydantic PatientInput & Response schemas
+│   │   └── main.py                   # FastAPI REST Prediction Endpoint
+│   └── dashboard/
+│       └── app.py                    # Streamlit Clinical Decision Support App
+└── tests/                            # 14 Unit Tests (100% passing)
 ```
 
 ---
 
-## ⚡ 9. CLI & Execution Commands
+## ⚡ 10. CLI & Execution Commands
 
-### 1. Run Automated Retraining Pipeline:
+### 1. Run Master Retraining Pipeline:
 ```bash
 python -m src.pipeline.training_pipeline --model xgboost
 ```
 
-### 2. Launch FastAPI Real-Time Scoring Service:
+### 2. Run Hyperparameter Tuning & Threshold Optimization:
+```bash
+python -m src.training.hyperparameter
+```
+
+### 3. Run Automated Unit Test Suite (14 Tests):
+```bash
+pytest -v
+```
+
+### 4. Launch FastAPI REST Service:
 ```bash
 python -m src.api.main
 ```
 * **Swagger UI Documentation**: `http://127.0.0.1:8000/docs`
-* **Health Check**: `GET http://127.0.0.1:8000/health`
-* **Predict Readmission**: `POST http://127.0.0.1:8000/predict`
+
+### 5. Launch Streamlit Clinical Dashboard:
+```bash
+streamlit run src/dashboard/app.py
+```
+* **Dashboard URL**: `http://127.0.0.1:8501`
+
+### 6. Run Complete System with Docker:
+```bash
+docker compose up --build -d
+```

@@ -219,12 +219,12 @@ with tab1:
                 st.metric(
                     label="30-Day Readmission Probability",
                     value=f"{prob * 100:.1f}%",
-                    delta="High Risk" if prob >= 0.50 else ("Moderate Risk" if prob >= 0.25 else "Low Risk"),
+                    delta="High Risk" if prob >= 0.44 else ("Moderate Risk" if prob >= 0.25 else "Low Risk"),
                     delta_color="inverse" if prob >= 0.25 else "normal",
                 )
 
             with res_col2:
-                if prob >= 0.50:
+                if prob >= 0.44:
                     st.markdown("""
                     <div class="risk-card-high">
                         <h4 style="color: #991B1B; margin-top:0;">🔴 HIGH READMISSION RISK DETECTED</h4>
@@ -290,7 +290,7 @@ with tab2:
 
                 batch_df["readmission_risk_prob"] = [round(p, 4) for p in probs]
                 batch_df["risk_tier"] = [
-                    "High Risk" if p >= 0.50 else ("Moderate Risk" if p >= 0.25 else "Low Risk")
+                    "High Risk" if p >= 0.44 else ("Moderate Risk" if p >= 0.25 else "Low Risk")
                     for p in probs
                 ]
 
