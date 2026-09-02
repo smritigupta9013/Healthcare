@@ -78,9 +78,15 @@ class ModelTrainer:
 
         if self.model_type == "xgboost":
             self.model = xgb.XGBClassifier(
-                n_estimators=150,
-                learning_rate=0.05,
-                max_depth=5,
+                n_estimators=250,
+                learning_rate=0.02,
+                max_depth=7,
+                subsample=0.7,
+                colsample_bytree=0.8,
+                min_child_weight=10,
+                gamma=0.5,
+                reg_alpha=5.0,
+                reg_lambda=5.0,
                 scale_pos_weight=scale_pos_weight,
                 random_state=self.random_state,
                 eval_metric="logloss",

@@ -1,24 +1,24 @@
 {
     "model_name": "xgboost",
     "test_patients_count": 13998,
-    "roc_auc_score": 0.654,
+    "roc_auc_score": 0.6623,
     "class_1_readmitted": {
-        "recall": 0.5163,
-        "precision": 0.1441,
-        "f1_score": 0.2253,
+        "recall": 0.5274,
+        "precision": 0.1544,
+        "f1_score": 0.2388,
         "support": 1257
     },
     "class_0_not_readmitted": {
-        "recall": 0.6974,
-        "precision": 0.936,
-        "f1_score": 0.7992,
+        "recall": 0.7149,
+        "precision": 0.9388,
+        "f1_score": 0.8117,
         "support": 12741
     },
-    "overall_accuracy": 0.6811,
+    "overall_accuracy": 0.6981,
     "confusion_matrix": {
-        "true_negatives": 8885,
-        "false_positives": 3856,
-        "false_negatives": 608,
-        "true_positives": 649
+        "true_negatives": 9109,
+        "false_positives": 3632,
+        "false_negatives": 594,
+        "true_positives": 663
     }
 }
